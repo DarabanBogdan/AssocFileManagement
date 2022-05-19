@@ -9,11 +9,13 @@ import java.util.StringJoiner;
 @Log
 public class StringComponent {
 
+    public static final String UNDER_SCORE="_";
+    public static final String DOT="[.]";
     private StringComponent(){
 
     }
     public static String getWord(String string, int position){
-        String[] t=string.split("_");
+        String[] t=string.split(UNDER_SCORE);
         return t[position];
     }
     public static String getSplitName(String name){
@@ -23,5 +25,14 @@ public class StringComponent {
             sj.add(s);
         }
         return sj.toString();
+    }
+    public static String getLastWord(String string){
+        String[] t=string.split(UNDER_SCORE);
+        return t[t.length-1];
+    }
+
+    public static String removeExtension(String string){
+        String [] s= string.split(DOT);
+        return s[0];
     }
 }

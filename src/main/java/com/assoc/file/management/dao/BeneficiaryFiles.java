@@ -5,15 +5,18 @@ import lombok.Data;
 
 import java.io.File;
 
+import static com.assoc.file.management.utils.StringComponent.UNDER_SCORE;
+
 @Data
 public class BeneficiaryFiles {
 
     private int date;
     private File file;
-    private FileType type;
+    private String type;
 
-    public BeneficiaryFiles(File f) {
-        this.date= Integer.parseInt(StringComponent.getWord(f.getName(),1));
+    public BeneficiaryFiles(File f,int position) {
+        this.date= Integer.parseInt(StringComponent.getWord(f.getName(),position));
         this.file=f;
+        type=UNDER_SCORE+StringComponent.removeExtension(StringComponent.getLastWord(f.getName()));
     }
 }

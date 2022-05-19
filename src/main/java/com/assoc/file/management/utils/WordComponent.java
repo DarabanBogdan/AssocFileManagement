@@ -34,7 +34,7 @@ public class WordComponent {
                 .stream()
                 .filter(r->r.getText(0).equals(GRUP_TINTA))
                 .findFirst()
-                .ifPresent(m->m.setText(GRUP_TINTA+WHITE_SPACE+beneficiaryName)));
+                .ifPresent(m->m.setText(WHITE_SPACE+beneficiaryName)));
 
         listFiles.forEach(file -> {
             XWPFTableRow lastRow = table.getRows().get(table.getNumberOfRows() - 1);
@@ -53,8 +53,9 @@ public class WordComponent {
         });
         table.removeRow(0);
 
-
-        doc.write(new FileOutputStream(destination + FileComponent.SLASH + "result.docx"));
+        FileOutputStream out=new FileOutputStream(destination + FileComponent.SLASH + "result.docx");
+        doc.write(out);
+        out.close();
         doc.close();
 
     }

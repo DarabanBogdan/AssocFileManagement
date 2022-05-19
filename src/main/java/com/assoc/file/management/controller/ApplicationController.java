@@ -1,5 +1,6 @@
 package com.assoc.file.management.controller;
 
+import com.assoc.file.management.service.FileMover;
 import com.assoc.file.management.service.FileMoverImpl;
 import lombok.Data;
 import org.springframework.stereotype.Service;
@@ -50,7 +51,9 @@ public class ApplicationController implements ActionListener {
         JButton template = new JButton("Template");
 
         JButton move = new JButton("Move");
-        JButton opis = new JButton("OPIS");
+        JButton opisWord = new JButton("OPIS Word");
+        JButton opisExcel = new JButton("OPIS Excel");
+
 
         destination.addActionListener(this);
         destination.setBounds(10, 20, 100, 25);
@@ -63,10 +66,11 @@ public class ApplicationController implements ActionListener {
         templateLabel.setBounds(129, 130, 450, 25);
 
         move.addActionListener(this);
-        move.setBounds(330, 460, 100, 25);
-        opis.addActionListener(this);
-        opis.setBounds(450, 460, 100, 25);
-
+        move.setBounds(230, 460, 100, 25);
+        opisWord.addActionListener(this);
+        opisWord.setBounds(350, 460, 100, 25);
+        opisExcel.addActionListener(this);
+        opisExcel.setBounds(470, 460, 100, 25);
 
         panelButtonsLocation.add(jList);
         panelButtonsLocation.setLayout(null);
@@ -77,7 +81,8 @@ public class ApplicationController implements ActionListener {
         panelButtonsLocation.add(origin);
         panelButtonsLocation.add(template);
         panelButtonsLocation.add(move);
-        panelButtonsLocation.add(opis);
+        panelButtonsLocation.add(opisWord);
+        panelButtonsLocation.add(opisExcel);
 
         frame.add(panelButtonsLocation);
     }
@@ -130,17 +135,26 @@ public class ApplicationController implements ActionListener {
                 }
                 break;
             }
-            case "OPIS": {
+            case "OPIS Word": {
                 if (destinationPath.isEmpty() || originPath.isEmpty())
                     Toast.getErrorToast("Missing path!").setVisible(true);
                 else {
-                    FileMoverImpl fileMover = new FileMoverImpl();
-                    fileMover.functionalityOne(Collections.singletonList(originPath), destinationPath, templatePath);
+                    FileMover fileMover = new FileMoverImpl();
+                    fileMover.writeWordOpis(Collections.singletonList(originPath), destinationPath, templatePath);
                     Toast.getSuccesToast();
                 }
                 break;
             }
-
+            case "OPIS Excel":{
+                if (destinationPath.isEmpty() || originPath.isEmpty())
+                    Toast.getErrorToast("Missing path!").setVisible(true);
+                else {
+                    FileMover fileMover = new FileMoverImpl();
+                    fileMover.writeExcelOpis(Collections.singletonList(originPath), destinationPath, templatePath);
+                    Toast.getSuccesToast();
+                }
+                break;
+            }
             default: {
 
             }

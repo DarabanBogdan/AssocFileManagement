@@ -17,6 +17,6 @@ public class BeneficiaryFiles {
     public BeneficiaryFiles(File f,int position) {
         this.date= Integer.parseInt(StringComponent.getWord(f.getName(),position));
         this.file=f;
-        type=UNDER_SCORE+StringComponent.removeExtension(StringComponent.getLastWord(f.getName()));
+        type=UNDER_SCORE+StringComponent.removeExtension(StringComponent.getWordAfterName(f.getName(),position));
     }
 }

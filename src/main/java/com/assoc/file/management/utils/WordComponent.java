@@ -51,7 +51,7 @@ public class WordComponent {
             run.setText(file.getName(), 0);
             table.addRow(newRow);
         });
-        table.removeRow(0);
+        table.removeRow(1);
 
         FileOutputStream out=new FileOutputStream(destination + FileComponent.SLASH + "result.docx");
         doc.write(out);

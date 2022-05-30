@@ -35,4 +35,11 @@ public class StringComponent {
         String [] s= string.split(DOT);
         return s[0];
     }
+    public static String getWordAfterName(String string, int position){
+        String[] t=string.split(UNDER_SCORE);
+        StringJoiner sj=new StringJoiner(UNDER_SCORE);
+        for(int i=position+2; i<t.length;i++)
+            sj.add(t[i]);
+        return sj.toString();
+    }
 }

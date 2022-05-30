@@ -3,8 +3,7 @@ package com.assoc.file.management.utils;
 import lombok.extern.java.Log;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,15 +15,33 @@ import java.util.stream.Collectors;
 @Log
 public class FileComponent {
     public static final String SLASH = "\\";
-    public static final String DOT_PDF=".pdf";
+    public static final String DOT_PDF = ".pdf";
 
-    private FileComponent(){
-
+    private FileComponent() {
     }
+
+    public static File getProgramPath() {
+        String currentdir = System.getProperty("user.dir");
+        currentdir = currentdir.replace("\\", "/");
+        log.info(currentdir);
+        return new File(currentdir + SLASH + "PatternFile.json");
+    }
+
     public static void moveFileToUser(String destination, String name, File file) {
         log.info("Moving file:" + file.getName() + "to location:" + destination + SLASH + name);
         if (name != null) {
-            File destinationFile = new File(destination + SLASH + name + SLASH + file.getName());
+            File destinationFile;
+            File directory = new File(destination + SLASH + name);
+            if (!directory.exists()) {
+                    directory.mkdirs();
+            }
+            destinationFile = new File(destination + SLASH + name + SLASH + file.getName());
+
+//            try {
+//                destinationFile.createNewFile();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
             try {
                 Files.copy(file.toPath(), destinationFile.toPath());
             } catch (IOException e) {
@@ -58,11 +75,12 @@ public class FileComponent {
     }
 
     public static void saveCopy(String origin, String destination, String newName) {
-        log.info("Creating file:" + newName + "to location:" + destination );
+        log.info("Creating file:" + newName + "to location:" + destination);
         try {
-            Files.copy(new File(origin).toPath(),new File(destination+SLASH+newName+DOT_PDF).toPath());
+            Files.copy(new File(origin).toPath(), new File(destination + SLASH + newName + DOT_PDF).toPath());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 }
+

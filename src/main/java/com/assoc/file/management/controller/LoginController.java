@@ -25,7 +25,7 @@ public class LoginController {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
             e.printStackTrace();
         }
-        frame = new JFrame("");
+        frame = new JFrame("Assoc ARM");
         userService = new UserServiceImpl(new User("drb", "123"));
         frame.setSize(300, 200);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -68,7 +68,7 @@ public class LoginController {
                 ApplicationController applicationController=new ApplicationController();
                 applicationController.show();
             } else
-                Toast.getErrorToast("Username or password invalid").setVisible(true);
+                JOptionPane.showMessageDialog(frame, "Username or password invalid!!","Error",JOptionPane.ERROR_MESSAGE);
         }
 
         private User getUser() {

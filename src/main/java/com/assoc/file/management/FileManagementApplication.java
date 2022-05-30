@@ -10,11 +10,11 @@ import javax.swing.*;
 @SpringBootApplication
 @Log
 public class FileManagementApplication extends JFrame {
-
     public static void main(String[] args) {
         SpringApplication.run(FileManagementApplication.class, args);
         LoginController loginController=new LoginController();
         loginController.init();
+
 
     }
 }

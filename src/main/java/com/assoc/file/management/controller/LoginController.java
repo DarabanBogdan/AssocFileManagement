@@ -26,7 +26,7 @@ public class LoginController {
             e.printStackTrace();
         }
         frame = new JFrame("Assoc ARM");
-        userService = new UserServiceImpl(new User("drb", "123"));
+        userService = new UserServiceImpl(new User("AssocArm", "secretPassword"));
         frame.setSize(300, 200);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.add(initPanel());

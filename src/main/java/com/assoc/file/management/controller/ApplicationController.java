@@ -49,7 +49,7 @@ public class ApplicationController implements ActionListener {
     }
 
     public void show() {
-        frame = new JFrame("ASSOC ARM");
+        frame = new JFrame("Assoc ARM");
         frame.setSize(600, 550);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);

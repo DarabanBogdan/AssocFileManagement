@@ -36,12 +36,6 @@ public class FileComponent {
                     directory.mkdirs();
             }
             destinationFile = new File(destination + SLASH + name + SLASH + file.getName());
-
-//            try {
-//                destinationFile.createNewFile();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
             try {
                 Files.copy(file.toPath(), destinationFile.toPath());
             } catch (IOException e) {

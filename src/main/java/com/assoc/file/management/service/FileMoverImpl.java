@@ -122,7 +122,7 @@ public class FileMoverImpl implements FileMover {
         List<Beneficiary> listBene = new ArrayList<>();
         fileList.forEach(f -> {
                     if (patternCheck(f, pattern.getPatter())) {
-                        addBeneficiary(listBene, getWord(f.getName(), pattern.getNamePosition()), f, 0);
+                        addBeneficiary(listBene, getWord(f.getName(), pattern.getNamePosition()), f, pattern.getDatePosition());
                     }
                 }
         );

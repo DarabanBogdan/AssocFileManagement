@@ -1,14 +1,14 @@
 package com.assoc.file.management.utils;
 
+import com.assoc.file.management.dao.Beneficiary;
 import lombok.extern.java.Log;
 import org.springframework.stereotype.Component;
 
+import javax.print.DocFlavor;
 import java.io.*;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.StringJoiner;
+import java.nio.file.Path;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -27,22 +27,56 @@ public class FileComponent {
         return new File(currentdir + SLASH + "PatternFile.json");
     }
 
-    public static void moveFileToUser(String destination, String name, File file) {
-        log.info("Moving file:" + file.getName() + "to location:" + destination + SLASH + name);
-        if (name != null) {
-            File destinationFile;
-            File directory = new File(destination + SLASH + name);
-            if (!directory.exists()) {
-                    directory.mkdirs();
-            }
-            destinationFile = new File(destination + SLASH + name + SLASH + file.getName());
-            try {
-                Files.copy(file.toPath(), destinationFile.toPath());
-            } catch (IOException e) {
-                log.info(e.getMessage());
-                e.printStackTrace();
+    public static void moveFileToUser(String destination, List<Beneficiary> beneficiaries) {
+
+        List<File> fileList = List.of(Objects.requireNonNull(new File(destination).listFiles()));
+        Map<String, File> map = new HashMap<>();
+        Map<String, File> mapUndefined = new HashMap<>();
+        for (File file : fileList) {
+            if (file.isDirectory() && !StringComponent.getNP(file.getName()).equals("Error")) {
+                String np = StringComponent.getNP(file.getName());
+                if (mapUndefined.containsKey(np)) {
+                    mapUndefined.put(np, file);
+                    continue;
+                }
+                if (map.containsKey(np)) {
+                    mapUndefined.put(np, file);
+                    mapUndefined.put(np, map.get(np));
+                    map.remove(np);
+                    continue;
+                }
+                map.put(np, file);
             }
         }
+        File undefined=new File(destination+SLASH+"Undefined");
+        if(mapUndefined.size()>0){
+            undefined.mkdirs();
+        }
+
+        beneficiaries.forEach(b -> {
+            String name= b.getName();
+            if (map.containsKey(name)) {
+                b.getFiles().forEach(f -> {
+                    try {
+                        Files.copy(f.getFile().toPath(), Path.of(map.get(name).toPath() + SLASH + f.getFile().getName()));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+            } else {
+                    if(!undefined.exists())
+                        undefined.mkdirs();
+                    b.getFiles().forEach(f -> {
+                        try {
+                            Files.copy(f.getFile().toPath(), Path.of(undefined.getAbsolutePath() + SLASH + f.getFile().getName()));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    });
+
+            }
+        });
+
     }
 
     public static boolean patternCheck(File file, String pattern) {

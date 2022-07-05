@@ -31,11 +31,13 @@ public class ExcelComponent {
             XSSFSheet sheet = workbook.getSheetAt(0);
 
 
-            int lastRowNumner = sheet.getLastRowNum();
+            //int lastRowNumner = sheet.getLastRowNum();
+            //TODO FIX THIS
+            int lastRowNumner= (int) sheet.getRow(0).getCell(0).getNumericCellValue();
 
             XSSFRow headerRow = sheet.getRow(2);
             XSSFRow headerRowCount = sheet.getRow(2);
-            for (int i = 3; i <= lastRowNumner; i++) {
+            for (int i = 3; i < lastRowNumner; i++) {
                 XSSFRow row = sheet.getRow(i);
                 XSSFRow rowCount = sheetCount.getRow(i);
                 String beneficiaryName = getBeneficiaryName(row);
@@ -67,7 +69,7 @@ public class ExcelComponent {
 
     private void fillRowCount(XSSFRow headerRow, XSSFRow rowCount, Beneficiary bene) {
         int maximCellNumber = rowCount.getPhysicalNumberOfCells();
-        for (int i = 5; i < maximCellNumber; i++) {
+        for (int i = 5; i < headerRow.getLastCellNum(); i++) {
             XSSFCell cell = rowCount.getCell(i);
             cell.setBlank();
             XSSFCell headerCell = headerRow.getCell(i);
@@ -88,7 +90,7 @@ public class ExcelComponent {
         count++;
         int maximCellNumber = row.getPhysicalNumberOfCells();
         log.info("Write row for:" + bene.getName() + "with " + bene.getFiles().size() + " files");
-        for (int i = 5; i < maximCellNumber; i++) {
+        for (int i = 5; i < header.getLastCellNum(); i++) {
             XSSFCell cell = row.getCell(i);
             XSSFCell headerCell = header.getCell(i);
             String[] typeCell = headerCell.getStringCellValue().split(",");

@@ -41,14 +41,9 @@ public class FileMoverImpl implements FileMover {
             fileList.addAll(findAllFiles(originDirectory));
         }
         log.info("Read " + fileList.size() + "files.");
-        // String pattern = ".{1,255}[_][a-zA-Z]{1,255}[_].{1,255}";
-        fileList.forEach(f -> {
-                    if (patternCheck(f, pattern.getPatter()))
-                        moveFileToUser(destination, getWord(f.getName(), pattern.getNamePosition()), f);
-                    else
-                        log.warning("File:" + f.getName() + " does not match the pattern.");
-                }
-        );
+        List<Beneficiary> listBene = createListBeneficiary(fileList, pattern);
+        //listBene.forEach(b->moveFileToUser(destination,b));
+        moveFileToUser(destination,listBene);
     }
 
     @Override

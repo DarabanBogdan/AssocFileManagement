@@ -3,6 +3,7 @@ package com.assoc.file.management.utils;
 import lombok.extern.java.Log;
 import org.springframework.stereotype.Component;
 
+import java.util.Locale;
 import java.util.StringJoiner;
 
 @Component
@@ -29,6 +30,16 @@ public class StringComponent {
     public static String getLastWord(String string){
         String[] t=string.split(UNDER_SCORE);
         return t[t.length-1];
+    }
+
+    public static String getNP(String string){
+        String[] nameSplit=string.split("-");
+        if (nameSplit.length<2){
+            return "Error";
+        }
+        nameSplit[0]=nameSplit[0].toLowerCase();
+        String s=nameSplit[0].substring(0,1).toUpperCase()+nameSplit[0].substring(1);
+        return s+nameSplit[1];
     }
 
     public static String removeExtension(String string){

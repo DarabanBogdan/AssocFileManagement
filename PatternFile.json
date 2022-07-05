@@ -1,1 +1,1 @@
-{"name":null,"patterns":[{"label":"t","patter":"[0-9]{6}[_][a-zA-Z[-]0-9]{1,255}[_].{1,255}","datePosition":0,"namePosition":1},{"label":"move","patter":".{1,255}[_][a-zA-Z]{1,255}[_].{1,255}","datePosition":0,"namePosition":1}]}
+{"name":null,"patterns":[{"label":"t","patter":"[0-9]{6}[_][a-zA-Z[-]0-9]{1,255}[_].{1,255}","datePosition":0,"namePosition":1},{"label":"move","patter":".{1,255}[_][a-zA-Z]{1,255}[_].{1,255}","datePosition":0,"namePosition":1},{"label":"move","patter":".{1,255}[_][0-9]{6}[_][a-zA-Z]{1,255}[_].{1,255}","datePosition":1,"namePosition":2}]}
